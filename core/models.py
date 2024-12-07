@@ -10,3 +10,6 @@ class Produto(models.Model):
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     quantidade = models.IntegerField()
     data_criacao = models.DateField(default=date.today)
+
+    def __str__(self):
+        return self.nome
