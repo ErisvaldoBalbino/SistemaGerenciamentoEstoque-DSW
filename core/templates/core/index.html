@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicial</title>
+</head>
+<body>
+    <style>
+        #main-box {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            margin: auto;
+            flex-direction: column;
+        }
+    </style>
+    <main>
+        <div id="main-box">
+            {% for produto in produtos %}
+            <div id="produto-box">
+                <p>{{ produto }}</p>
+                    <button>
+                        <a href="{% url 'details' produto.id %}" style="text-decoration: none;">Detalhes</a>
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+        <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
+        <button><a href="{% url 'categorias' %}">Categorias</a></button>
+    </main>
+</body>
+</html>
