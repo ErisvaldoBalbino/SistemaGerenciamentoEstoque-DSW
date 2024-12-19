@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, get_list_or_404
 from core.models import Produto, Fornecedor, Categoria
+from django.views.generic.list import ListView
 
 # Create your views here.
 
@@ -18,3 +19,9 @@ def fornecedores(request):
 def categorias(request):
     categorias = get_list_or_404(Categoria)
     return render(request, 'core/categorias.html', {'categorias': categorias})
+
+def produtosCategorias(request, categoria_nome):
+    categoria = Categoria.objects.get(nome=categoria_nome)
+    produtos = Produto.objects.filter(categorias=categoria)
+    context = {'produtos': produtos, 'categoria': categoria}
+    return render(request, 'core/categorias-produtos.html', context)
