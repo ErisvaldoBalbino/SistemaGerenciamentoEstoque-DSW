@@ -10,17 +10,19 @@
 <body>
     <main>
         <div id="box">
-            <h1>Categorias</h1>
-            {% for categoria in categorias %}
+            <h1>Produtos da categoria {{ categoria.nome }}</h1>
+            {% for produto in produtos %}
                 <div class="item-card">
-                    <p>{{ categoria.nome }}</p>
-                    <a href="{% url 'categorias_produtos' categoria.nome %}">Ver Produtos</a>
+                    <p>{{ produto.nome }}</p>
+                    <a href="{% url 'details' produto.id %}">Ver Detalhes</a>
                 </div>
+            {% empty %}
+                <p>Não há produtos cadastrados para esta categoria.</p>
             {% endfor %}
         </div>
         <div class="nav-buttons">
             <button><a href="{% url 'index' %}">Inicial</a></button>
-            <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
+            <button><a href="{% url 'categorias' %}">Categorias</a></button>
         </div>
     </main>
 </body>
