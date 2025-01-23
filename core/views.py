@@ -60,3 +60,4 @@ def cadastrar_categoria(request):
     else:
         form = CategoriaForm()
     return render(request, 'core/cadastrar_categoria.html', {'form': form})
+  
