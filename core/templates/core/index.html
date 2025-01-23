@@ -1,0 +1,36 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/css/base.css' %}">
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicial</title>
+</head>
+<body>
+    <main>
+        <div id="main-box">
+            <h1>Produtos</h1>
+            {% for produto in produtos %}
+                <div id="produto-box">
+                    <p>{{ produto }}</p>
+                    <button>
+                        <a href="{% url 'details' produto.id %}" style="text-decoration: none;">Detalhes</a>
+                    </button>
+                </div>
+            {% empty %}
+                <p>Não há produtos cadastrados.</p>
+            {% endfor %}
+        </div>
+        <div class="nav-buttons">
+            <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
+            <button><a href="{% url 'categorias' %}">Categorias</a></button>
+        </div>
+        <div class="nav-buttons">
+            <button><a href="{% url 'cadastrar_produto' %}">Cadastrar Produto</a></button>
+            <button><a href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a></button>
+            <button><a href="{% url 'cadastrar_categoria' %}">Cadastrar Categoria</a></button>
+        </div>
+    </main>
+</body>
+</html>

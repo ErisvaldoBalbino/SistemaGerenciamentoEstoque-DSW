@@ -1,0 +1,29 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/css/base.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias</title>
+</head>
+<body>
+    <main>
+        <div id="box">
+            <h1>Produtos da categoria {{ categoria.nome }}</h1>
+            {% for produto in produtos %}
+                <div class="item-card">
+                    <p>{{ produto.nome }}</p>
+                    <a href="{% url 'details' produto.id %}">Ver Detalhes</a>
+                </div>
+            {% empty %}
+                <p>Não há produtos cadastrados para esta categoria.</p>
+            {% endfor %}
+        </div>
+        <div class="nav-buttons">
+            <button><a href="{% url 'index' %}">Inicial</a></button>
+            <button><a href="{% url 'categorias' %}">Categorias</a></button>
+        </div>
+    </main>
+</body>
+</html>
