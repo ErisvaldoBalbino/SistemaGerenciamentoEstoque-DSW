@@ -14,9 +14,14 @@
             {% for produto in produtos %}
                 <div id="produto-box">
                     <p>{{ produto }}</p>
-                    <button>
-                        <a href="{% url 'details' produto.id %}" style="text-decoration: none;">Detalhes</a>
-                    </button>
+                    <div class="button-container">
+                        <button>
+                            <a href="{% url 'details' produto.id %}" style="text-decoration: none;">Detalhes</a>
+                        </button>
+                        <button>
+                            <a href="{% url 'deletar_produto' produto.id %}" style="text-decoration: none;">Deletar</a>
+                        </button>
+                    </div>
                 </div>
             {% empty %}
                 <p>Não há produtos cadastrados.</p>
