@@ -1,62 +1,70 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+#from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from core.models import Produto, Fornecedor, Categoria
 from core.forms import ProdutoForm, FornecedorForm, CategoriaForm
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, DeleteView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
-def index(request):
-    produtos = get_list_or_404(Produto)
-    return render(request, 'core/index.html', {'produtos': produtos})
+class IndexView(ListView):
+    model = Produto
+    template_name = 'core/index.html'
+    context_object_name = 'produtos'
 
-def details(request, produto_id):
-    produto = get_object_or_404(Produto, id=produto_id)
-    categorias = produto.categorias.all()
-    context = {
-        'produto': produto,
-        'categorias': categorias
-    }
-    return render(request, 'core/details.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['produtos'] = Produto.objects.all()
+        return context
+    
+class DetailsView(DetailView):
+    model = Produto
+    template_name = 'core/details.html'
+    context_object_name = 'produto'
 
-def fornecedores(request):
-    fornecedores = get_list_or_404(Fornecedor)
-    return render(request, 'core/fornecedores.html', {'fornecedores': fornecedores})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categorias'] = Categoria.objects.all()
+        return context
 
-def categorias(request):
-    categorias = get_list_or_404(Categoria)
-    return render(request, 'core/categorias.html', {'categorias': categorias})
+class FornecedoresView(ListView):
+    model = Fornecedor
+    template_name = 'core/fornecedores.html'
+    context_object_name = 'fornecedores'
 
-def produtosCategorias(request, categoria_nome):
-    categoria = get_object_or_404(Categoria, nome=categoria_nome)
-    produtos = Produto.objects.filter(categorias=categoria)
-    context = {'produtos': produtos, 'categoria': categoria}
-    return render(request, 'core/categorias_produtos.html', context)
+class CategoriasView(ListView):
+    model = Categoria
+    template_name = 'core/categorias.html'
+    context_object_name = 'categorias'
 
-def cadastrar_produto(request):
-    if request.method == 'POST':
-        form = ProdutoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('index')
-    else:
-        form = ProdutoForm()
-    return render(request, 'core/cadastrar_produto.html', {'form': form})
+class ProdutosCategoriasView(ListView):
+    model = Produto
+    template_name = 'core/categorias_produtos.html'
+    context_object_name = 'produtos'
 
-def cadastrar_fornecedor(request):
-    if request.method == 'POST':
-        form = FornecedorForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('fornecedores')
-    else:
-        form = FornecedorForm()
-    return render(request, 'core/cadastrar_fornecedor.html', {'form': form})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categoria'] = Categoria.objects.get(nome=self.kwargs['categoria_nome'])
+        return context
 
-def cadastrar_categoria(request):
-    if request.method == 'POST':
-        form = CategoriaForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('categorias')
-    else:
-        form = CategoriaForm()
-    return render(request, 'core/cadastrar_categoria.html', {'form': form})
+class CadastrarProdutoView(CreateView):
+    model = Produto
+    form_class = ProdutoForm
+    template_name = 'core/cadastrar_produto.html'
+    success_url = reverse_lazy('index')
+
+class CadastrarFornecedorView(CreateView):
+    model = Fornecedor
+    form_class = FornecedorForm
+    template_name = 'core/cadastrar_fornecedor.html'
+    success_url = reverse_lazy('fornecedores')
+
+class CadastrarCategoriaView(CreateView):
+    model = Categoria
+    form_class = CategoriaForm
+    template_name = 'core/cadastrar_categoria.html'
+    success_url = reverse_lazy('categorias')
+
+class DeletarProdutoView(DeleteView):
+    model = Produto
+    template_name = 'core/deletar_produto.html'
+    success_url = reverse_lazy('index')
