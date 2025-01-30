@@ -21,11 +21,6 @@ class DetailsView(DetailView):
     template_name = 'core/details.html'
     context_object_name = 'produto'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categorias'] = Categoria.objects.all()
-        return context
-
 class FornecedoresView(ListView):
     model = Fornecedor
     template_name = 'core/fornecedores.html'
@@ -40,6 +35,10 @@ class ProdutosCategoriasView(ListView):
     model = Produto
     template_name = 'core/categorias_produtos.html'
     context_object_name = 'produtos'
+
+    def get_queryset(self):
+        categoria_nome = self.kwargs['categoria_nome']
+        return Produto.objects.filter(categorias__nome=categoria_nome)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
