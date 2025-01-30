@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema</title>
+</head>
+<body>
+    <main>
+        <h1>
+            Itens
+        </h1>
+        {% for produto in produtos %}
+            <h2>{{ produto.nome }}</h2>
+            <a href="{% url 'details' produto.id %}" > Acessar </a>
+        {% empty %}
+            <h2>Nenhum item</h2>
+        {% endfor %}
+    </main>
+</body>
+</html>
