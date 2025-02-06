@@ -30,6 +30,20 @@
         {% empty %}
             <p>Não há produtos cadastrados.</p>
         {% endfor %}
+
+        {% if page_obj.has_previous %}
+            <a href="?{% preserve_url pagina=1 %}"><i class="page-icon fa-solid fa-angles-left"></i></a>
+            <a href="?{% preserve_url pagina=page_obj.previous_page_number %}"><i class="page-icon fa-solid fa-arrow-left"></i></a>
+        {% endif %}
+
+        <span>
+            {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{% preserve_url pagina=page_obj.next_page_number %}"><i class="page-icon fa-solid fa-arrow-right"></i></a>
+            <a href="?{% preserve_url pagina=page_obj.paginator.num_pages %}"><i class="page-icon fa-solid fa-angles-right"></i></a>
+        {% endif %}
         
     </div>
     <div class="nav-buttons">
