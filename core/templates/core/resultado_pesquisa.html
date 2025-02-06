@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load preserve_url %}
+
+{% block css %}
+    <title>Resultados</title>
+{% endblock %}
+
+{% block content %}
+    <div id="main-box">
+        <div class="main-header">
+            <h1>Resultados da pesquisa</h1>
+            <form action="{% url 'resultado_pesquisa' %}" method="get">
+                <input name="q" type="text" placeholder="Pesquisar produto" id="search-input" value="{{ request.GET.q }}">
+                <button id="filter-button" type="submit">Filtrar</button>
+            </form>
+        </div>
+        {% for resultado in resultados %}
+            <div id="produto-box">
+                <p>{{ resultado }}</p>
+                <div class="button-container">
+                   <button>
+                        <a href="{% url 'details' resultado.id %}" style="text-decoration: none;">Detalhes</a>
+                    </button>
+                    <button>
+                        <a href="{% url 'deletar_produto' resultado.id %}" style="text-decoration: none;">Deletar</a>
+                    </button>
+                </div>
+            </div>
+        {% empty %}
+            <p>Nenhum produto encontrado.</p>
+        {% endfor %}
+        
+    </div>
+    <div class="nav-buttons">
+        <button><a href="{% url 'index' %}">Inicial</a></button>
+        <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
+        <button><a href="{% url 'categorias' %}">Categorias</a></button>
+    </div>
+    <div class="nav-buttons">
+        <button><a href="{% url 'cadastrar_produto' %}">Cadastrar Produto</a></button>
+        <button><a href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a></button>
+        <button><a href="{% url 'cadastrar_categoria' %}">Cadastrar Categoria</a></button>
+    </div>
+{% endblock %}
