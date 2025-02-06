@@ -1,27 +1,22 @@
+{% extends 'core/base.html' %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'core/css/base.css' %}">
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block css %}
     <title>Categorias</title>
-</head>
-<body>
-    <main>
-        <div id="box">
-            <h1>Categorias</h1>
-            {% for categoria in categorias %}
-                <div class="item-card">
-                    <p>{{ categoria.nome }}</p>
-                    <a href="{% url 'categorias_produtos' categoria.nome %}">Ver Produtos</a>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="nav-buttons">
-            <button><a href="{% url 'index' %}">Inicial</a></button>
-            <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
-        </div>
-    </main>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div id="box">
+        <h1>Categorias</h1>
+        {% for categoria in categorias %}
+            <div class="item-card">
+                <p>{{ categoria.nome }}</p>
+                <a href="{% url 'categorias_produtos' categoria.nome %}">Ver Produtos</a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="nav-buttons">
+        <button><a href="{% url 'index' %}">Inicial</a></button>
+        <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
+    </div>
+{% endblock %}
