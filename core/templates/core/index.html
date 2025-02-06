@@ -10,10 +10,6 @@
     <div id="main-box">
         <div class="main-header">
             <h1>Produtos</h1>
-            <form action="{% url 'resultado_pesquisa' %}" method="get">
-                <input name="q"  type="text" placeholder="Pesquisar produto" id="search-input">
-                <button id="filter-button" type="submit">Filtrar</button>
-            </form>
         </div>
         {% for produto in produtos %}
             <div id="produto-box">
@@ -46,13 +42,25 @@
         {% endif %}
         
     </div>
-    <div class="nav-buttons">
-        <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
-        <button><a href="{% url 'categorias' %}">Categorias</a></button>
-    </div>
-    <div class="nav-buttons">
-        <button><a href="{% url 'cadastrar_produto' %}">Cadastrar Produto</a></button>
-        <button><a href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a></button>
-        <button><a href="{% url 'cadastrar_categoria' %}">Cadastrar Categoria</a></button>
+
+{% endblock %}
+
+{% block filtros %}
+    <div class="filter-card">
+        <h2>Filtros</h2>
+        <form action="{% url 'resultado_pesquisa' %}" method="get">
+            <div class="filter-group">
+                <label for="search-input">Buscar por nome:</label>
+                <input name="q" type="text" id="search-input" placeholder="Digite o nome do produto">
+            </div>
+            <div class="filter-group">
+                <label>Faixa de preço:</label>
+                <input type="number" name="start_value" placeholder="Preço mínimo" step="1">
+                <input type="number" name="end_value" placeholder="Preço máximo" step="1">
+            </div>
+            <div class="filter-group">
+                <button id="filter-button" type="submit">Aplicar Filtros</button>
+            </div>
+        </form>
     </div>
 {% endblock %}

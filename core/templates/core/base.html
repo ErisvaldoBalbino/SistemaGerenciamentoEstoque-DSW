@@ -11,8 +11,37 @@
 </head>
 <body>
     <main>
-        {% block content %}
-        {% endblock %}
+        <div class="content-wrapper">
+            <div class="main-content">
+                {% block content %}
+                {% endblock %}
+
+                <div class="nav-buttons">
+                    <button class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                        <a href="{% url 'index' %}">Inicial</a>
+                    </button>
+                    <button class="{% if request.resolver_match.url_name == 'fornecedores' %}active{% endif %}">
+                        <a href="{% url 'fornecedores' %}">Fornecedores</a>
+                    </button>
+                    <button class="{% if request.resolver_match.url_name == 'categorias' %}active{% endif %}">
+                        <a href="{% url 'categorias' %}">Categorias</a>
+                    </button>
+                </div>
+                <div class="nav-buttons">
+                    <button class="{% if request.resolver_match.url_name == 'cadastrar_produto' %}active{% endif %}">
+                        <a href="{% url 'cadastrar_produto' %}">Cadastrar Produto</a>
+                    </button>
+                    <button class="{% if request.resolver_match.url_name == 'cadastrar_fornecedor' %}active{% endif %}">
+                        <a href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a>
+                    </button>
+                    <button class="{% if request.resolver_match.url_name == 'cadastrar_categoria' %}active{% endif %}">
+                        <a href="{% url 'cadastrar_categoria' %}">Cadastrar Categoria</a>
+                    </button>
+                </div>
+            </div>
+            {% block filtros %}
+            {% endblock %}
+        </div>
     </main>
 </body>
 </html>

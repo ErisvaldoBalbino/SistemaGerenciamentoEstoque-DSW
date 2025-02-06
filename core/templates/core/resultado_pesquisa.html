@@ -9,11 +9,7 @@
 {% block content %}
     <div id="main-box">
         <div class="main-header">
-            <h1>Resultados da pesquisa</h1>
-            <form action="{% url 'resultado_pesquisa' %}" method="get">
-                <input name="q" type="text" placeholder="Pesquisar produto" id="search-input" value="{{ request.GET.q }}">
-                <button id="filter-button" type="submit">Filtrar</button>
-            </form>
+            <h1>Resultados</h1>
         </div>
         {% for resultado in resultados %}
             <div id="produto-box">
@@ -44,16 +40,25 @@
             <a href="?{% preserve_url pagina=page_obj.next_page_number %}"><i class="page-icon fa-solid fa-arrow-right"></i></a>
             <a href="?{% preserve_url pagina=page_obj.paginator.num_pages %}"><i class="page-icon fa-solid fa-angles-right"></i></a>
         {% endif %}
-        
     </div>
-    <div class="nav-buttons">
-        <button><a href="{% url 'index' %}">Inicial</a></button>
-        <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
-        <button><a href="{% url 'categorias' %}">Categorias</a></button>
-    </div>
-    <div class="nav-buttons">
-        <button><a href="{% url 'cadastrar_produto' %}">Cadastrar Produto</a></button>
-        <button><a href="{% url 'cadastrar_fornecedor' %}">Cadastrar Fornecedor</a></button>
-        <button><a href="{% url 'cadastrar_categoria' %}">Cadastrar Categoria</a></button>
+{% endblock %}
+
+{% block filtros %}
+    <div class="filter-card">
+        <h2>Filtros</h2>
+        <form action="{% url 'resultado_pesquisa' %}" method="get">
+            <div class="filter-group">
+                <label for="search-input">Buscar por nome:</label>
+                <input name="q" type="text" id="search-input" placeholder="Digite o nome do produto" value="{{ request.GET.q }}">
+            </div>
+            <div class="filter-group">
+                <label>Faixa de preço:</label>
+                <input type="number" name="start_value" placeholder="Preço mínimo" step="0.01" value="{{ request.GET.start_value }}">
+                <input type="number" name="end_value" placeholder="Preço máximo" step="0.01" value="{{ request.GET.end_value }}">
+            </div>
+            <div class="filter-group">
+                <button id="filter-button" type="submit">Aplicar Filtros</button>
+            </div>
+        </form>
     </div>
 {% endblock %}

@@ -80,7 +80,26 @@ class ResultadosPesquisaView(ListView):
     page_kwarg = "pagina"
 
     def get_queryset(self):
+        queryset = Produto.objects.all()
+        
         query = self.request.GET.get("q")
         if query:
-            return Produto.objects.filter(nome__icontains=query)
-        return Produto.objects.all()
+            queryset = queryset.filter(nome__icontains=query)
+        
+        try:
+            start_value = self.request.GET.get("start_value")
+            end_value = self.request.GET.get("end_value")
+            
+            if start_value:
+                queryset = queryset.filter(preco__gte=start_value)
+            if end_value:
+                queryset = queryset.filter(preco__lte=end_value)
+        except (ValueError, TypeError):
+            pass
+            
+        return queryset
+        
+
+
+
+        
