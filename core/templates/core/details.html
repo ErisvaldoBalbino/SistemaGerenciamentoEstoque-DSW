@@ -1,34 +1,29 @@
+{% extends 'core/base.html' %}
 {% load static %}
-<link rel="stylesheet" href="{% static 'core/css/base.css' %}">
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{% block css %}
     <title>Detalhes {{produto.id}}</title>
-</head>
-<body>
-    <main>
-        <div class="details-container">
-            <h1>Detalhes do produto {{produto.id}}</h1>
-            <p>Nome: {{ produto.nome }}</p>
-            <p>Código: {{ produto.codigo }}</p>
-            <p>Descrição: {{ produto.descricao }}</p>
-            <p>Preço: R$ {{ produto.preco }}</p>
-            <p>Quantidade: {{ produto.quantidade }}</p>
-            <p>Fornecedor: {{ produto.fornecedor }}</p>
-            <p>Categorias: 
-                {% for categoria in produto.categorias.all %}
-                    {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
-                {% empty %}
-                    Nenhuma categoria associada
-                {% endfor %}
-            </p>
-        </div>
-        <div class="nav-buttons">
-            <button><a href="{% url 'index' %}">Inicial</a></button>
-            <button><a href="{% url 'categorias' %}">Categorias</a></button>
-        </div>
-    </main>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div class="details-container">
+        <h1>Detalhes do produto {{produto.id}}</h1>
+        <p>Nome: {{ produto.nome }}</p>
+        <p>Código: {{ produto.codigo }}</p>
+        <p>Descrição: {{ produto.descricao }}</p>
+        <p>Preço: R$ {{ produto.preco }}</p>
+        <p>Quantidade: {{ produto.quantidade }}</p>
+        <p>Fornecedor: {{ produto.fornecedor }}</p>
+        <p>Categorias: 
+            {% for categoria in produto.categorias.all %}
+                {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Nenhuma categoria associada
+            {% endfor %}
+        </p>
+    </div>
+    <div class="nav-buttons">
+        <button><a href="{% url 'index' %}">Inicial</a></button>
+        <button><a href="{% url 'categorias' %}">Categorias</a></button>
+    </div>
+{% endblock %}

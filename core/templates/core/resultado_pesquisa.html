@@ -3,36 +3,37 @@
 {% load preserve_url %}
 
 {% block css %}
-    <title>Inicial</title>
+    <title>Resultados</title>
 {% endblock %}
 
 {% block content %}
     <div id="main-box">
         <div class="main-header">
-            <h1>Produtos</h1>
+            <h1>Resultados da pesquisa</h1>
             <form action="{% url 'resultado_pesquisa' %}" method="get">
-                <input name="q"  type="text" placeholder="Pesquisar produto" id="search-input">
+                <input name="q" type="text" placeholder="Pesquisar produto" id="search-input" value="{{ request.GET.q }}">
                 <button id="filter-button" type="submit">Filtrar</button>
             </form>
         </div>
-        {% for produto in produtos %}
+        {% for resultado in resultados %}
             <div id="produto-box">
-                <p>{{ produto }}</p>
+                <p>{{ resultado }}</p>
                 <div class="button-container">
-                    <button>
-                        <a href="{% url 'details' produto.id %}" style="text-decoration: none;">Detalhes</a>
+                   <button>
+                        <a href="{% url 'details' resultado.id %}" style="text-decoration: none;">Detalhes</a>
                     </button>
                     <button>
-                        <a href="{% url 'deletar_produto' produto.id %}" style="text-decoration: none;">Deletar</a>
+                        <a href="{% url 'deletar_produto' resultado.id %}" style="text-decoration: none;">Deletar</a>
                     </button>
                 </div>
             </div>
         {% empty %}
-            <p>Não há produtos cadastrados.</p>
+            <p>Nenhum produto encontrado.</p>
         {% endfor %}
         
     </div>
     <div class="nav-buttons">
+        <button><a href="{% url 'index' %}">Inicial</a></button>
         <button><a href="{% url 'fornecedores' %}">Fornecedores</a></button>
         <button><a href="{% url 'categorias' %}">Categorias</a></button>
     </div>
