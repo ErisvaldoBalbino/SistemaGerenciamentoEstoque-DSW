@@ -23,16 +23,22 @@ class FornecedoresView(ListView):
     model = Fornecedor
     template_name = 'core/fornecedores.html'
     context_object_name = 'fornecedores'
+    paginate_by = 5
+    page_kwarg = "pagina"
 
 class CategoriasView(ListView):
     model = Categoria
     template_name = 'core/categorias.html'
     context_object_name = 'categorias'
+    paginate_by = 5
+    page_kwarg = "pagina"
 
 class ProdutosCategoriasView(ListView):
     model = Produto
     template_name = 'core/categorias_produtos.html'
     context_object_name = 'produtos'
+    paginate_by = 5
+    page_kwarg = "pagina"
 
     def get_queryset(self):
         categoria_nome = self.kwargs['categoria_nome']
@@ -70,6 +76,7 @@ class ResultadosPesquisaView(ListView):
     model = Produto
     template_name = 'core/resultado_pesquisa.html'
     context_object_name = 'resultados'
+    paginate_by = 5
     page_kwarg = "pagina"
 
     def get_queryset(self):
