@@ -10,11 +10,9 @@ class IndexView(ListView):
     model = Produto
     template_name = 'core/index.html'
     context_object_name = 'produtos'
+    paginate_by = 5
+    page_kwarg = "pagina"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['produtos'] = Produto.objects.all()
-        return context
     
 class DetailsView(DetailView):
     model = Produto
@@ -67,3 +65,15 @@ class DeletarProdutoView(DeleteView):
     model = Produto
     template_name = 'core/deletar_produto.html'
     success_url = reverse_lazy('index')
+
+class ResultadosPesquisaView(ListView):
+    model = Produto
+    template_name = 'core/resultado_pesquisa.html'
+    context_object_name = 'resultados'
+    page_kwarg = "pagina"
+
+    def get_queryset(self):
+        query = self.request.GET.get("q")
+        if query:
+            return Produto.objects.filter(nome__icontains=query)
+        return Produto.objects.all()
