@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'core/css/forms.css' %}">
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Login</h2>
+    <form method="post">
+      {% csrf_token %}
+
+        {% if form.errors %}
+            <div class="field-error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {% for field in form %}
+                <div class="field-wrapper">
+                    {{ field.label_tag }}   
+                    {{ field }}
+                </div>
+            {% endfor %}
+        </div>
+
+      <button type="submit" class="btn-login">Log In</button>
+    </form>
+</div>
+{% endblock %}
