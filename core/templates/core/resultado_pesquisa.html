@@ -40,6 +40,7 @@
             <a href="?{% preserve_url pagina=page_obj.next_page_number %}"><i class="page-icon fa-solid fa-arrow-right"></i></a>
             <a href="?{% preserve_url pagina=page_obj.paginator.num_pages %}"><i class="page-icon fa-solid fa-angles-right"></i></a>
         {% endif %}
+        
     </div>
 {% endblock %}
 
@@ -53,8 +54,8 @@
             </div>
             <div class="filter-group">
                 <label>Faixa de preço:</label>
-                <input type="number" name="start_value" placeholder="Preço mínimo" step="0.01" value="{{ request.GET.start_value }}">
-                <input type="number" name="end_value" placeholder="Preço máximo" step="0.01" value="{{ request.GET.end_value }}">
+                <input type="number" name="preco_min" placeholder="Preço mínimo" step="0.01" value="{{ request.GET.preco_min }}">
+                <input type="number" name="preco_max" placeholder="Preço máximo" step="0.01" value="{{ request.GET.preco_max }}">
             </div>
             <div class="filter-group">
                 <button id="filter-button" type="submit">Aplicar Filtros</button>

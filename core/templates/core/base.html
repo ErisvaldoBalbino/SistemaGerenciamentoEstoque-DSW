@@ -16,6 +16,7 @@
                 {% block content %}
                 {% endblock %}
 
+                {% if request.user.is_authenticated %}
                 <div class="nav-buttons">
                     <button class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
                         <a href="{% url 'index' %}">Inicial</a>
@@ -26,6 +27,10 @@
                     <button class="{% if request.resolver_match.url_name == 'categorias' %}active{% endif %}">
                         <a href="{% url 'categorias' %}">Categorias</a>
                     </button>
+                    <form method="post" action="{% url "logout" %}">
+                        {% csrf_token %}
+                        <button type="submit">Sair</button>
+                    </form>
                 </div>
                 <div class="nav-buttons">
                     <button class="{% if request.resolver_match.url_name == 'cadastrar_produto' %}active{% endif %}">
@@ -39,6 +44,7 @@
                     </button>
                 </div>
             </div>
+            {% endif %}
             {% block filtros %}
             {% endblock %}
         </div>
