@@ -87,19 +87,14 @@ class ResultadosPesquisaView(ListView):
             queryset = queryset.filter(nome__icontains=query)
         
         try:
-            start_value = self.request.GET.get("start_value")
-            end_value = self.request.GET.get("end_value")
+            preco_min = self.request.GET.get("preco_min")
+            preco_max = self.request.GET.get("preco_max")
             
-            if start_value:
-                queryset = queryset.filter(preco__gte=start_value)
-            if end_value:
-                queryset = queryset.filter(preco__lte=end_value)
+            if preco_min:
+                queryset = queryset.filter(preco__gte=preco_min)
+            if preco_max:
+                queryset = queryset.filter(preco__lte=preco_max)
         except (ValueError, TypeError):
             pass
             
         return queryset
-        
-
-
-
-        
