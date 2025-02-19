@@ -8,18 +8,61 @@
 {% block content %}
     <div class="details-container">
         <h1>Detalhes do produto {{produto.id}}</h1>
-        <p>Nome: {{ produto.nome }}</p>
-        <p>Código: {{ produto.codigo }}</p>
-        <p>Descrição: {{ produto.descricao }}</p>
-        <p>Preço: R$ {{ produto.preco }}</p>
-        <p>Quantidade: {{ produto.quantidade }}</p>
-        <p>Fornecedor: {{ produto.fornecedor }}</p>
-        <p>Categorias: 
-            {% for categoria in produto.categorias.all %}
-                {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Nenhuma categoria associada
-            {% endfor %}
-        </p>
+        
+        <div class="details-content">
+            <div class="details-image">
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}">
+                {% else %}
+                    <div class="no-image">
+                        <i class="fa-solid fa-image"></i>
+                        <p>Sem imagem</p>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="details-info">
+                <div class="info-item">
+                    <span class="info-label">Nome:</span>
+                    <span class="info-value">{{ produto.nome }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Código:</span>
+                    <span class="info-value">{{ produto.codigo }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Descrição:</span>
+                    <span class="info-value">{{ produto.descricao }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Preço:</span>
+                    <span class="info-value">R$ {{ produto.preco }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Quantidade:</span>
+                    <span class="info-value">{{ produto.quantidade }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Fornecedor:</span>
+                    <span class="info-value">{{ produto.fornecedor }}</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Categorias:</span>
+                    <span class="info-value">
+                        {% for categoria in produto.categorias.all %}
+                            {{ categoria.nome }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Nenhuma categoria associada
+                        {% endfor %}
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

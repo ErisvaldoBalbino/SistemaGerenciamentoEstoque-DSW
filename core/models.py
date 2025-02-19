@@ -1,7 +1,13 @@
 from django.db import models
 from datetime import date
+import os
 
 # Create your models here.
+
+def imagem_produto_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = f"{instance.codigo}.{ext}"
+    return os.path.join('produtos', filename)
 
 class Fornecedor(models.Model):
     nome = models.CharField(max_length=50)
@@ -25,6 +31,7 @@ class Produto(models.Model):
     data_criacao = models.DateField(default=date.today)
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE, blank=True)
     categorias = models.ManyToManyField(Categoria, blank=True, related_name='produtos')
+    imagem = models.ImageField(upload_to=imagem_produto_path, default='produtos/default.webp', blank=True, null=True)
 
     def __str__(self):
         return self.nome
