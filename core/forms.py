@@ -11,6 +11,14 @@ class ProdutoForm(forms.ModelForm):
         widget=forms.SelectMultiple(attrs={'class': 'form-input'})
     )
 
+    imagem = forms.ImageField(
+        required=False,
+        widget=forms.FileInput(attrs={
+            'class': 'form-input',
+            'accept': 'image/*'
+        })
+    )
+
     def clean_preco(self):
         preco = self.cleaned_data['preco']
         if preco <= 0:
@@ -37,13 +45,12 @@ class ProdutoForm(forms.ModelForm):
 
     class Meta:
         model = Produto
-        fields = ['nome', 'codigo', 'descricao', 'preco', 'quantidade', 'fornecedor', 'categorias']
+        fields = ['nome', 'codigo', 'descricao', 'preco', 'quantidade', 'fornecedor', 'categorias', 'imagem']
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-input'}),
             'descricao': forms.TextInput(attrs={'class': 'form-input'}),
             'codigo': forms.TextInput(attrs={'class': 'form-input'}),
             'preco': forms.NumberInput(attrs={'class': 'form-input'}),
-            'quantidade': forms.NumberInput(attrs={'class': 'form-input'}),
         }
 
 class FornecedorForm(forms.ModelForm):

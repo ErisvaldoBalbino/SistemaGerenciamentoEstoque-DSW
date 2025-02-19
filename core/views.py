@@ -4,6 +4,7 @@ from core.forms import ProdutoForm, FornecedorForm, CategoriaForm
 from django.views.generic import ListView, DetailView, CreateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 # Create your views here.
 
@@ -54,7 +55,12 @@ class CadastrarProdutoView(LoginRequiredMixin, CreateView):
     model = Produto
     form_class = ProdutoForm
     template_name = 'core/cadastrar_produto.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('cadastrar_produto')
+    success_message = "Produto cadastrado com sucesso!"
+
+    def form_valid(self, form):
+        messages.success(self.request, self.success_message)
+        return super().form_valid(form)
 
 class CadastrarFornecedorView(LoginRequiredMixin, CreateView):
     model = Fornecedor
